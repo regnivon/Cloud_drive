@@ -1,0 +1,24 @@
+{% block title %}Create an Account{% endblock %}
+{% block content %}
+    <form method='post' action="{% url 'uploader:create_user' %}">
+    {% csrf_token %}
+	<table>
+      <tr>
+          <label>Username
+              <input type="text" value="" name="username" size="10"/>
+          </label>
+      </tr>
+        <tr>
+        <label>Email
+              <input type="text" value="" name="email" size="10"/>
+          </label>
+      </tr>
+      <tr>
+        <label>Password
+              <input type="text" value="" name="password" size="10"/>
+          </label>
+      </tr>
+    </table>
+	<button type="submit" class="btn btn-success" value="Click" name="submit">Register</button>
+    </form>
+{% endblock %}

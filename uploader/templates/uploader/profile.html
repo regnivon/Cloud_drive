@@ -1,0 +1,22 @@
+{% if user.is_authenticated %}
+     <b>{{ user.get_username }}'s Uploads Page</b>
+    <form action="{% url 'uploader:success' %}" method="post">
+    {% csrf_token %}
+     {% if upload_list %}
+         {% for upload in upload_list %}
+             <li>{{ upload.name }} <input type="checkbox" name="checks[]" value="{{ upload.name }}"/></li>
+         {% endfor %}
+     {% endif %}
+
+     {% csrf_token %}
+     <a> Download Selected </a>
+     <input id="Download" type="submit" class="btn" value="Download" name="download"/> <br>
+     <a>Delete Selected</a>
+     <input id="Delete" type="submit" value="Delete" name="delete"/> <br>
+    </form>
+     <a href="{% url 'uploader:upload'%}">Upload a File</a> <br>
+     <a href="{% url 'logout'%}?next={{request.path}}">Logout</a> <br>
+{% else %}
+    <b> You must be logged in to an account to see this page correctly!</b>
+    <a href="{% url 'login'%}?next={{request.path}}">Login</a>
+{% endif %}

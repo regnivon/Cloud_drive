@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>S3 Drive</title>
+</head>
+<body>
+<h1>Welcome to the S3 Drive</h1>
+<a href="{% url 'login'%}?next={{request.path}}">Login</a> <br>
+<a href="{% url 'uploader:register' %}"> Create Account</a>
+
+</body>
+</html>
