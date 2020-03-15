@@ -81,18 +81,21 @@ def download_view(request):
         rmtree(f"tmp_media/{request.user}")
         os.mkdir(f"tmp_media/{request.user}")
     file_list = request.POST.getlist("checks[]")
-    for file in file_list:
-        uploader.download(request.user, file)
-    dl_path = ""
-    if len(file_list) > 1:
-        os.system(f"zip -r tmp_media/{request.user}.z tmp_media/{request.user}")
-        dl_path = f"tmp_media/{request.user}.z"
+    if len(file_list > 0):
+        for file in file_list:
+            uploader.download(request.user, file)
+        dl_path = ""
+        if len(file_list) > 1:
+            os.system(f"zip -r tmp_media/{request.user}.z tmp_media/{request.user}")
+            dl_path = f"tmp_media/{request.user}.z"
+        else:
+            dl_path = f"tmp_media/{request.user}/{file_list[0]}"
+        f = FileWrapper(open(dl_path, 'rb'))
+        response = HttpResponse(f, content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(dl_path)}"'
+        return response
     else:
-        dl_path = f"tmp_media/{request.user}/{file_list[0]}"
-    f = FileWrapper(open(dl_path, 'rb'))
-    response = HttpResponse(f, content_type='text/plain')
-    response['Content-Disposition'] = f'attachment; filename="{os.path.basename(dl_path)}"'
-    return response
+        return render(request, "uploader/download_success.html")
     #return render(request, "uploader/download_success.html")
 
 

@@ -1,4 +1,5 @@
 import boto3
+import os
 
 
 def create_object_path(user, obj_name):
@@ -11,6 +12,8 @@ class Uploader:
         self.s3 = boto3.resource("s3")
         # create bucket or get it if it exists
         self.bucket = self.s3.create_bucket(Bucket="qcloudtest5517")
+        if not os.path.isdir("tmp_media"):
+            os.mkdir("tmp_media")
 
     def upload(self, user, file):
         save_path = create_object_path(user, file)
