@@ -75,21 +75,21 @@ def delete_view(request):
 
 def download_view(request):
     clean_tmp()
-    if not os.path.isdir(f"tmp_media/{request.user}"):
-        os.mkdir(f"tmp_media/{request.user}")
+    if not os.path.isdir(f"tmp/{request.user}"):
+        os.mkdir(f"tmp/{request.user}")
     else:
-        rmtree(f"tmp_media/{request.user}")
-        os.mkdir(f"tmp_media/{request.user}")
+        rmtree(f"tmp/{request.user}")
+        os.mkdir(f"tmp/{request.user}")
     file_list = request.POST.getlist("checks[]")
     if len(file_list > 0):
         for file in file_list:
             uploader.download(request.user, file)
         dl_path = ""
         if len(file_list) > 1:
-            os.system(f"zip -r tmp_media/{request.user}.z tmp_media/{request.user}")
-            dl_path = f"tmp_media/{request.user}.z"
+            os.system(f"zip -r tmp/{request.user}.z tmp/{request.user}")
+            dl_path = f"tmp/{request.user}.z"
         else:
-            dl_path = f"tmp_media/{request.user}/{file_list[0]}"
+            dl_path = f"tmp/{request.user}/{file_list[0]}"
         f = FileWrapper(open(dl_path, 'rb'))
         response = HttpResponse(f, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(dl_path)}"'
@@ -100,6 +100,6 @@ def download_view(request):
 
 
 def clean_tmp():
-    for file in os.listdir("tmp_media"):
+    for file in os.listdir("tmp"):
         if file.endswith(".z"):
-            os.remove(f"tmp_media/{file}")
+            os.remove(f"tmp/{file}")
