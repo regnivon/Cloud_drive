@@ -81,7 +81,7 @@ def download_view(request):
         rmtree(f"tmp/{request.user}")
         os.mkdir(f"tmp/{request.user}")
     file_list = request.POST.getlist("checks[]")
-    if len(file_list > 0):
+    if len(file_list) > 0:
         for file in file_list:
             uploader.download(request.user, file)
         dl_path = ""

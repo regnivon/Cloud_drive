@@ -27,16 +27,7 @@ class Uploader:
         path = get_path(user, filename)
         self.s3.Object(self.bucket.name, path).delete()
 
-
     def download(self, user, filename):
         path = get_path(user, filename)
         self.bucket.download_file(path, f"tmp/{user}/{filename}")
-
-
-if __name__ == '__main__':
-    u = Uploader()
-    #u.bucket.objects.delete()
-    for item in u.bucket.objects.all():
-        print(item)
-
 
