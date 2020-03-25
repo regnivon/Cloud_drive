@@ -4,7 +4,7 @@
     {% csrf_token %}
      {% if upload_list %}
          {% for upload in upload_list %}
-             <li>{{ upload.name }} <input type="checkbox" name="checks[]" value="{{ upload.name }}"/></li>
+             <li>{{ upload.name }} Last Modified: {{ upload.submit_date }} <input type="checkbox" name="checks[]" value="{{ upload.name }}"/></li>
          {% endfor %}
      {% endif %}
 
